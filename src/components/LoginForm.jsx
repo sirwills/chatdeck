@@ -1,29 +1,63 @@
+// import axios from "axios";
 import axios from "axios";
 import React, { useState } from "react";
 
 const LoginForm = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
- async const handleSubmit = (e) => {
-   await axios.post("/register", { username, password });
+  // Function to handle user registration form submission
+  const registerUser = async (e, userData) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:6070/users/register",
+        userData
+      );
+      console.log(response.data); // Handle the response from the server
+    } catch (error) {
+      console.error(error); // Handle any errors that occurred during the request
+    }
   };
+
+  // Example usage
+  // const userData = {
+  //   username: ,
+  //   email: "john@example.com",
+  //   password: "password123",
+  // };
+
+  // registerUser(userData);
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="w-100">
+      <form className="w-100" onSubmit={registerUser}>
+        <div class="mb-3">
+          <label for="exampleInputFullname1" class="form-label">
+            Fullname
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputFullname"
+            aria-describedby="fullnameHelp"
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">
-            Username
+            Email
           </label>
           <input
             type="email"
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div class="mb-3">
